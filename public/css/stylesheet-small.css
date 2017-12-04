@@ -1,0 +1,138 @@
+body {
+	direction: rtl;
+    font-family: 'Trebuchet MS', sans-serif;
+    background-color: #F8FFFF;
+}
+
+nav, a, button {
+    min-height: 48px;
+    min-width: 48px;
+}
+
+span {
+    white-space: pre-line;
+}
+
+input[type="text"] {
+    width: 200px;
+    height: 20px;
+}
+
+input[type="password"] {
+    width: 200px;
+    height: 20px;
+}
+
+a:link {
+    text-decoration: none;
+    color: #000;
+}
+
+a:visited { 
+    color: #000;
+}
+
+.formTitle {
+    box-sizing: border-box;
+    width: 100%;
+    height: 50px;
+    text-align: center;
+}
+
+.formLine {
+    box-sizing: border-box;
+    width: 100%;
+    height: 50px;
+    padding-right: 10px;
+}
+
+.formCell {
+    box-sizing: border-box;
+    width: 50%;
+    height: 100%;
+    padding-right: 10px;
+    float: left;
+}
+
+.credits {
+    text-align: center;
+    width: 100%;
+    height: 30px;
+}
+
+.error {
+    color: red;
+}
+/* UP */
+.header-cont {
+    box-sizing: border-box;
+    width:100%;
+    height: 50px;
+    position: fixed;
+    border-bottom: 1px solid #D6D6C2;
+    background-color: #F0F0F0;
+    top: 0;
+    left: 0;
+    font-size: 20px;
+}
+
+.butMenu {
+    text-align: center;
+    height: 100%;
+    float: right;
+}
+
+.butMenuChat {
+    width: 25%;
+    box-sizing: border-box;
+    border-left: 1px solid #D6D6C2;
+}
+
+.butMenuReg {
+    width: 25%;
+    box-sizing: border-box;
+    border-left: 1px solid #D6D6C2;
+}
+
+.butMenuLog {
+    width: 25%;
+    box-sizing: border-box;
+    border-left: 1px solid #D6D6C2;
+}
+
+.logo {
+    width: 25%;
+}
+
+.menuCenterSpace {
+    width: 0;
+}
+
+.welcome {
+    width: 0;
+    font-size: 0;
+}
+
+.containerBut {
+    height: 50px;
+    width: 100%;
+}
+
+/* REGISTER */
+.formMain {
+    font-size: 17px;
+    box-sizing: border-box;
+	width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    margin: 100px auto;
+    background-color: #F8FFFF;
+}
+
+/* 404 */
+.e404 {
+    text-align: center;
+    margin: 100px auto;
+    font-size: 100px;
+    color: rgb(116, 75, 75);
+}

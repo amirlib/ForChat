@@ -1,0 +1,108 @@
+﻿<%- contentFor('MAIN') %>
+
+<script>
+	var errUser = false, errPass1 = false, errPass2 = false, errEmail = false, err = false;
+	var valPass1 = "", valPass2 = "";
+	var arrInput = new Array;
+    $(document).ready(function () {
+		$("#pass2").prop('disabled', true); //חוסם את האימות סיסמה
+		$("#user").click(function() {
+			$('.hint').text("שם המשתמש צריך להיות בין 4 ל-16 תווים מספריים ואותיות אנגליות בלבד");
+			$("#user").keyup(function() {
+				var val = this.value; //התווים עצמם
+				if (val.length == 0) { //אם האורך לא נכון
+                	errHandler(101);
+					errUser = false;
+				} else if (val.length > 16 || val.length < 4) { //אם האורך לא נכון
+					errHandler(1);
+					errUser = false;
+				} else {
+					err = checkEnglish(val);
+                	if (err == false) {
+                        errHandler(2);
+						errUser = false;
+                	} else {
+                    	errHandler(101);
+						errUser = true;
+					}
+				}
+			});
+		});
+		$("#pass1").click(function() {
+			$('.hint').text("הסיסמא צריכה להיות בין 4 ל-16 תווים מספריים ואותיות אנגליות בלבד");
+			$("#pass1").keyup(function() {
+				valPass1 = this.value; //התווים עצמם
+				if (valPass1.length == 0) { //אם האורך לא נכון
+                	errHandler(102);
+					$("#pass2").prop('disabled', true); //חוסם את האימות סיסמה
+					errPass1 = false;
+				} else if (valPass1.length > 16 || valPass1.length < 4) { //אם האורך לא נכון
+					errHandler(3);
+					$("#pass2").prop('disabled', true); //חוסם את האימות סיסמה
+					errPass1 = false;
+				} else {
+					$("#pass2").prop('disabled', false);
+					err = checkEnglish(valPass1);
+                    if (err == false) {
+                    	errHandler(4);
+						errPass1 = false;
+						$("#pass2").prop('disabled', true); //חוסם את האימות סיסמה
+                	} else {
+						errHandler(102);
+						var pass2Disabled = $('#pass2').prop('disabled');
+						if (pass2Disabled == false) {
+							errPass1 = check2Pass(valPass1, valPass2);
+						}
+						errPass1 = true;
+					}
+				}
+			});
+		});
+		$('#pass2').keyup(function () { //סיסמה שנית
+			valPass2 = this.value;
+			errPass2 = check2Pass(valPass1, valPass2);
+        }); //סופ הפונקצייה
+		$("#email").click(function() {
+			$('.hint').text("");
+			$("#email").keyup(function() {
+				var val = this.value; //התווים עצמם
+				if (val.length == 0) { //אם האורך לא נכון
+                	errHandler(103);
+					errEmail = false;
+				} else if (val.length < 6) { //אם האורך לא נכון
+					errEmail = false;
+				} else {
+					err = checkEmail(val);
+                	if (err == false) {
+                        errHandler(6);
+						errEmail = false;
+                	} else {
+                    	errHandler(103);
+						errEmail = true;
+					}
+				}
+			});
+		});
+	}); //סופ הסקריפט
+</script>
+
+<main>
+    <form id='regForm' name='regForm' action='' onsubmit='return checkButReg()' method='POST'>
+		<div class="formMain">
+			<div class="formTitle"><h1>מערכת משתמשים - הרשמה</h1></div>
+			<div class="formLine"> <span class="hint"></span> </div>
+			<div class="formLine"> <label for="user">שם משתמש:</label> <span class="error errUser"></span> </div>
+			<div class="formLine"> <input type='text' id='user' name='user' maxlength='15' title="שם משתמש" placeholder='שם משתמש'> </div>
+			<div class="formLine"> <label for="pass1">סיסמה:</label> <span class="error errPass1"></span> </div>
+			<div class="formLine"> <input type='password' id='pass1' name='pass1' maxlength='16' title="סיסמה" placeholder='סיסמה'> </div>
+			<div class="formLine"> <label for="pass2">אימות סיסמה:</label> <span class="error errPass2"></span> </div>
+			<div class="formLine"> <input type='password' id='pass2' name='pass2' maxlength='16' title="אימות סיסמה" placeholder='סיסמה'> </div>
+			<div class="formLine"> <label for="email">דואר אלקטרוני:</label> <span class="error errEmail"></span> </div>
+			<div class="formLine"> <input type='text' id='email' name='email' title="דואר אלקטרוני" placeholder='Email'> </div>
+			<div class="formLine">
+				<div class="formCell"><a href='login.html'>יש לי כבר חשבון</a></div>
+				<div class="formCell"><input type="submit" id="regBut" name="regBut" value="הרשם"></div>
+			</div>
+		</div>
+    </form>
+</main>
