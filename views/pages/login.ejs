@@ -5,7 +5,6 @@
 	var valPass1 = "", valPass2 = "";
 	var arrInput = new Array;
     $(document).ready(function () {
-		$("#pass2").prop('disabled', true); //חוסם את האימות סיסמה
 		$("#user").click(function() {
 			$('.hint').text("שם המשתמש צריך להיות בין 4 ל-16 תווים מספריים ואותיות אנגליות בלבד");
 			$("#user").keyup(function() {
@@ -65,13 +64,13 @@
     <form id='logForm' name='logForm' action='' onsubmit='return checkButLog()' method='POST'>
 		<div class="formMain">
 			<div class="formTitle"><h1>מערכת משתמשים - התחברות</h1></div>
-		    <div class="formLine"> <span class="error"></span> </div>
-			<div class="formLine"> <label for="user">שם משתמש</label> </div>
+		    <div class="formLine"> <span class="hint"></span> </div>
+			<div class="formLine"> <label for="user">שם משתמש</label> <span class="error errUser"></span> </div>
 			<div class="formLine"> <input type='text' id='user' name='user' maxlength='15' title="שם משתמש" placeholder='שם משתמש'> </div>
-			<div class="formLine"><label for="pass1">סיסמה</label> </div>
+			<div class="formLine"> <label for="pass">סיסמה</label> <span class="error errPass"></span> </div>
 			<div class="formLine"> <input type='password' id='pass' name='pass' maxlength='16' title="סיסמה" placeholder='סיסמה'> </div>
 			<div class="formLine">
-				<div class="formCell"><a href='register.html'>אין לי חשבון</a> , <a href='register.html'>שכחתי סיסמה</a></div>
+				<div class="formCell"><a href='register'>אין לי חשבון</a> , <a href=''>שכחתי סיסמה</a></div>
 				<div class="formCell"><input type="submit" id="logBut" name="logBut" value="התחבר"></div>
 			</div>
 		</div>
