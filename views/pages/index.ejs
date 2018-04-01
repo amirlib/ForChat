@@ -1,2 +1,50 @@
 <%- contentFor('MAIN') %>
 
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    $(function () {
+        var socket = io();
+        $('#chat').keypress(function(e) {
+            if(e.which == 13) {
+                socket.emit('chat message', $('#chat').val());
+                $('#chat').val('');
+                return false;
+            }
+        });
+        $('#sendChat').submit(function() {
+            socket.emit('chat message', $('#chat').val());
+            $('#chat').val('');
+            return false;
+        });
+        socket.on('chat message', function(msg){
+            $('.messages').append($('<li>').text(msg));
+        });
+    });
+</script>
+</script>
+
+<main>
+    <div class="userFrame">
+        <div class="userTitle"> <span class="hint">שם המשתמש צריך להיות בין 4 ל-16 תווים מספריים ואותיות אנגליות בלבד:</span> </div>
+        <div class="userLine">
+            <div class="userCell"> <input type="button" id="saveUser" name="saveUser" value="שמור משתמש"> </div>
+            <form id='sendChat' name='sendChat' action='/sendChat' method='POST'>
+                    <div class="userCell"> <input type='text' id='user' name='user' maxlength='16' title="שם משתמש" placeholder='שם משתמש'> </div>
+        </div>
+        <div class="userLine"> <span class="error errUser"></span></div>
+    </div>
+
+    <div class="chatMain">
+        <div class="chatTitle"> <h1>Welcome to Chat</h1> </div>
+        <div class="chatFrame">
+            <div class="chatText">
+                <ul class="messages"></ul>
+            </div>
+            <div class="chatLine">
+                    <div class="chatCellBut"> <input type="submit" id="send" name="send" value="שלח"> </div>
+                    <div class="chatCellText"> <textarea id="chat" name="chat" rows="4" cols="50"></textarea> </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
