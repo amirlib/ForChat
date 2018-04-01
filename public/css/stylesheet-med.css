@@ -2,51 +2,21 @@ body {
     background-color: white;
 }
 
-.butMenuChat {
-    width: 15%;
-}
-
-.butMenuReg {
-    width: 15%;
-}
-
-.butMenuLog {
-    width: 15%;
-}
-
-.logo {
-    width: 15%;
-}
-
-.menuSpace {
-    width: 25%;
-}
-
-.welcome {
-    width: 15%;
-    font-size: 20px;
-    box-sizing: border-box;
-    border-left: 1px solid #D6D6C2;
-}
-
-.containerBut {
-    width: 100%;
-}
-
-.formMain {
+.chatMain {
     box-sizing: border-box;
     width: 520px;
-    border: 1px solid #D6D6C2;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.userFrame {
+    box-sizing: border-box;
+    width: 520px;
     margin-left: auto;
     margin-right: auto;
 }
 
 input[type="text"] {
-    width: 300px;
-    height: 30px;
-}
-
-input[type="password"] {
-    width: 300px;
+    width: 200px;
     height: 30px;
 }
