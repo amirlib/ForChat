@@ -2,34 +2,76 @@
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
+    var user = "", err = false, val = "";
+    $(document).ready(function () {
+        $('#sendChat').attr('disabled', true);
+        $("#user").click(function() {
+		    $("#user").keyup(function() {
+			    val = this.value; //התווים עצמם
+			    if (val.length == 0) { //if the input is empty
+                    $('.hint').removeClass("error").text("שם המשתמש צריך להיות בין 4 ל-16 תווים מספריים ואותיות אנגליות בלבד");
+                    err = false;
+			    } else if (val.length > 16 || val.length < 4) { //אם האורך לא נכון
+                    $('.hint').addClass("error").text("שם משתמש לא באורך החוקי");
+                    err = false;
+			    } else {
+                    err = checkLegalChars(val);
+                    if (err == false) {
+                        $('.hint').addClass("error").text("שם משתמש לא חוקי");
+                    } else {
+                        $('.hint').removeClass("error").text("");
+                    }
+                }
+            });
+        });
+    });
+    function checkButUser() {
+        if (err == false) {
+            $('.hint').addClass("error").text("לא הוזן שם משתמש חוקי");
+        } else {
+            user = val;
+            $('#sendChat').attr('disabled', false);
+        }
+    }
+    function checkButSend() {
+        if (user === "") {
+            $('.messages').append($('<li></li>').addClass("error").text("אין אפשרות להשתתף בצ'אט ללא שם מתשמש תיקני"));
+            return false;
+        }
+        return true;
+    }
     $(function () {
         var socket = io();
         $('#chat').keypress(function(e) {
             if(e.which == 13) {
-                socket.emit('chat message', $('#chat').val());
-                $('#chat').val('');
-                return false;
+                if (checkButSend() == true) {
+                    socket.emit('chat message', $('#chat').val());
+                    $('#chat').val('');
+                    return false;
+                }
+                $("#chat").val('');
             }
         });
-        $('#sendChat').submit(function() {
+        $('#sendChat').click(function() {
             socket.emit('chat message', $('#chat').val());
             $('#chat').val('');
             return false;
         });
-        socket.on('chat message', function(msg){
-            $('.messages').append($('<li>').text(msg));
+        socket.on('chat message', function(msg) {
+            $('.messages').append($('<li></li>').text(msg));
+            if($('#chatText')[0].scrollHeight - $('#chatText').innerHeight() <= $('#chatText').scrollTop() + 29) {
+                $('#chatText').scrollTop(5000);
+            }
         });
     });
-</script>
 </script>
 
 <main>
     <div class="userFrame">
-        <div class="userTitle"> <span class="hint">שם המשתמש צריך להיות בין 4 ל-16 תווים מספריים ואותיות אנגליות בלבד:</span> </div>
+        <div class="userTitle"> <span class="hint">שם המשתמש צריך להיות בין 4 ל-16 תווים מספריים ואותיות אנגליות בלבד</span> </div>
         <div class="userLine">
-            <div class="userCell"> <input type="button" id="saveUser" name="saveUser" value="שמור משתמש"> </div>
-            <form id='sendChat' name='sendChat' action='/sendChat' method='POST'>
-                    <div class="userCell"> <input type='text' id='user' name='user' maxlength='16' title="שם משתמש" placeholder='שם משתמש'> </div>
+            <div class="userCell"> <input type="button" id="saveUser" name="saveUser" value="שמור משתמש" onclick='checkButUser()'> </div>
+            <div class="userCell"> <input type='text' id='user' name='user' maxlength='16' title="שם משתמש" placeholder='שם משתמש'> </div>
         </div>
         <div class="userLine"> <span class="error errUser"></span></div>
     </div>
@@ -37,13 +79,12 @@
     <div class="chatMain">
         <div class="chatTitle"> <h1>Welcome to Chat</h1> </div>
         <div class="chatFrame">
-            <div class="chatText">
+            <div class="chatText" id='chatText'>
                 <ul class="messages"></ul>
             </div>
             <div class="chatLine">
-                    <div class="chatCellBut"> <input type="submit" id="send" name="send" value="שלח"> </div>
-                    <div class="chatCellText"> <textarea id="chat" name="chat" rows="4" cols="50"></textarea> </div>
-                </form>
+                <div class="chatCellBut"> <input type="button" id="sendChat" name="send" value="שלח" onclick='checkButSend()'> </div>
+                <div class="chatCellText"> <textarea id="chat" name="chat" rows="4" cols="50"></textarea> </div>
             </div>
         </div>
     </div>
