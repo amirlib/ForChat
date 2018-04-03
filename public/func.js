@@ -28,14 +28,30 @@ function checkEmail(val) {
     return true;
 }
 /** Checks the input for Only english and numeric chars **/
-function checkEnglish(val) {
-    for (var i = 0; i < val.length; i++) {
+function checkUserChars(val) {
+    for (let i = 0; i < val.length; i++) {
         if (val.charCodeAt(i) <= 47 || (val.charCodeAt(i) >= 58 && val.charCodeAt(i) <= 64)
             || (val.charCodeAt(i) >= 91 && val.charCodeAt(i) <= 96) || val.charCodeAt(i) >= 123) {
             return false;
         }
     }
     return true;
+}
+/** Checks if the input is empty **/
+function checkEmpty(val) {
+    let i;
+    if (val.length == 0) {
+        return true;
+    }
+    for (i = 0; i < val.length; i++) {
+        if (val.charCodeAt(i) != 32 && val.charCodeAt(i) != 10) {
+            break;
+        }
+    }
+    if (i == val.length) {
+        return true;
+    }
+    return false;
 }
 /** Check if the 2 passwords are mach **/
 function check2Pass(val1, val2) {

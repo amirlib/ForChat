@@ -15,7 +15,7 @@
                     $('.hint').addClass("error").text("שם משתמש לא באורך החוקי");
                     err = false;
 			    } else {
-                    err = checkLegalChars(val);
+                    err = checkUserChars(val);
                     if (err == false) {
                         $('.hint').addClass("error").text("שם משתמש לא חוקי");
                     } else {
@@ -44,8 +44,8 @@
         var socket = io();
         $('#chat').keypress(function(e) {
             if(e.which == 13) {
-                if (checkButSend() == true) {
-                    socket.emit('chat message', $('#chat').val());
+                if (checkButSend() == true && checkEmpty(this.value) == false) {
+                    socket.emit('chat message', this.value, $('#user').val());
                     $('#chat').val('');
                     return false;
                 }
@@ -53,13 +53,17 @@
             }
         });
         $('#sendChat').click(function() {
-            socket.emit('chat message', $('#chat').val());
-            $('#chat').val('');
-            return false;
+            if (checkButSend() == true && checkEmpty($('#chat').val()) == false) {
+                socket.emit('chat message', $('#chat').val(), $('#user').val());
+                $('#chat').val('');
+                return false;
+            }
+            $("#chat").val('');
         });
-        socket.on('chat message', function(msg) {
-            $('.messages').append($('<li></li>').text(msg));
-            if($('#chatText')[0].scrollHeight - $('#chatText').innerHeight() <= $('#chatText').scrollTop() + 29) {
+        socket.on('chat message', function(msg, userName) {
+            $('.messages').append($('<li>').text(userName));
+            $('.messages').append($('<li>').text(msg));
+            if($('#chatText')[0].scrollHeight - $('#chatText').innerHeight() <= $('#chatText').scrollTop() + 49) {
                 $('#chatText').scrollTop(5000);
             }
         });
@@ -70,10 +74,9 @@
     <div class="userFrame">
         <div class="userTitle"> <span class="hint">שם המשתמש צריך להיות בין 4 ל-16 תווים מספריים ואותיות אנגליות בלבד</span> </div>
         <div class="userLine">
-            <div class="userCell"> <input type="button" id="saveUser" name="saveUser" value="שמור משתמש" onclick='checkButUser()'> </div>
             <div class="userCell"> <input type='text' id='user' name='user' maxlength='16' title="שם משתמש" placeholder='שם משתמש'> </div>
+            <div class="userCell"> <input type="button" id="saveUser" name="saveUser" value="שמור משתמש" onclick='checkButUser()'> </div>
         </div>
-        <div class="userLine"> <span class="error errUser"></span></div>
     </div>
 
     <div class="chatMain">
@@ -83,8 +86,8 @@
                 <ul class="messages"></ul>
             </div>
             <div class="chatLine">
-                <div class="chatCellBut"> <input type="button" id="sendChat" name="send" value="שלח" onclick='checkButSend()'> </div>
                 <div class="chatCellText"> <textarea id="chat" name="chat" rows="4" cols="50"></textarea> </div>
+                <div class="chatCellBut"> <input type="button" id="sendChat" name="send" value="שלח" onclick='checkButSend()'> </div>
             </div>
         </div>
     </div>

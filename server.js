@@ -23,9 +23,9 @@ app.use(express.static(__dirname + '/public'));
 
 /*************** io SECTTION ***************/
 io.on('connection', function(socket){
-    socket.on('chat message', function(msg) {
-      console.log('message: ' + msg);
-      io.emit('chat message', msg);
+    socket.on('chat message', function(msg, userName) {
+      console.log('user: ' + userName + ', message: ' + msg);
+      io.emit('chat message', msg, userName);
     });
   });
 
