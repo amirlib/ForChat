@@ -14,12 +14,14 @@ nav, a, button {
     margin: 0; 
     padding: 0;
 }
+
 .liMsg { 
     padding: 3px 10px;
     font-size: 14px;
     word-wrap: wrap;
     word-break: break-all;
 }
+
 .liMsg:nth-child(odd) {
     padding-right: 10px;
     padding-top: 0;
