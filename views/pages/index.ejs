@@ -3,6 +3,7 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
     var user = "", err = false, val = "";
+    var socket = io();
     $(document).ready(function () {
         $('#sendChat').attr('disabled', true);
         $("#user").click(function() {
@@ -33,36 +34,26 @@
             $('#sendChat').attr('disabled', false);
         }
     }
-    function checkButSend() {
-        if (user === "") {
-            $('.messages').append($('<li></li>').addClass("error").text("אין אפשרות להשתתף בצ'אט ללא שם מתשמש תיקני"));
-            return false;
+    /** fuction for sending the text and user to the chat */
+    function sendChat(msg, userName) {
+        if (checkUserSend(userName) == true && checkEmpty(msg) == false) {
+            socket.emit('chat message', msg, userName);
         }
-        return true;
+        $("#chat").val("");
     }
     $(function () {
-        var socket = io();
         $('#chat').keypress(function(e) {
             if(e.which == 13) {
-                if (checkButSend() == true && checkEmpty(this.value) == false) {
-                    socket.emit('chat message', this.value, $('#user').val());
-                    $('#chat').val('');
-                    return false;
-                }
-                $("#chat").val('');
+                e.preventDefault(); /* prevent from '\n' appear */
+                sendChat(this.value, user);
             }
         });
         $('#sendChat').click(function() {
-            if (checkButSend() == true && checkEmpty($('#chat').val()) == false) {
-                socket.emit('chat message', $('#chat').val(), $('#user').val());
-                $('#chat').val('');
-                return false;
-            }
-            $("#chat").val('');
+            sendChat($('#chat').val(), user);
         });
         socket.on('chat message', function(msg, userName) {
-            $('.messages').append($('<li>').text(userName));
-            $('.messages').append($('<li>').text(msg));
+            $('.messages').append($('<li>').addClass("liMsg").text(userName));
+            $('.messages').append($('<li>').addClass("liMsg").text(msg));
             if($('#chatText')[0].scrollHeight - $('#chatText').innerHeight() <= $('#chatText').scrollTop() + 49) {
                 $('#chatText').scrollTop(5000);
             }
@@ -75,7 +66,7 @@
         <div class="userTitle"> <span class="hint">שם המשתמש צריך להיות בין 4 ל-16 תווים מספריים ואותיות אנגליות בלבד</span> </div>
         <div class="userLine">
             <div class="userCell"> <input type='text' id='user' name='user' maxlength='16' title="שם משתמש" placeholder='שם משתמש'> </div>
-            <div class="userCell"> <input type="button" id="saveUser" name="saveUser" value="שמור משתמש" onclick='checkButUser()'> </div>
+            <div class="userCell"> <input type="button" id="saveUser" name="saveUser" value="שמור משתמש" onclick="checkButUser()"> </div>
         </div>
     </div>
 
@@ -87,7 +78,7 @@
             </div>
             <div class="chatLine">
                 <div class="chatCellText"> <textarea id="chat" name="chat" rows="4" cols="50"></textarea> </div>
-                <div class="chatCellBut"> <input type="button" id="sendChat" name="send" value="שלח" onclick='checkButSend()'> </div>
+                <div class="chatCellBut"> <input type="button" id="sendChat" name="send" value="שלח"> </div>
             </div>
         </div>
     </div>

@@ -14,13 +14,15 @@ nav, a, button {
     margin: 0; 
     padding: 0;
 }
-.messages li { 
+
+.liMsg { 
     padding: 3px 10px;
     font-size: 14px;
     word-wrap: wrap;
     word-break: break-all;
 }
-.messages li:nth-child(odd) {
+
+.liMsg:nth-child(odd) {
     padding-right: 10px;
     padding-top: 0;
     padding-bottom: 0;
