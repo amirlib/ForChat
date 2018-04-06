@@ -53,14 +53,6 @@ function checkEmpty(val) {
     }
     return false;
 }
-/** check if the user is not empty before sending he chat  */
-function checkUserSend(userName) {
-    if (userName === "") {
-        $('.messages').append($('<li></li>').addClass("error").text("אין אפשרות להשתתף בצ'אט ללא שם מתשמש תיקני"));
-        return false;
-    }
-    return true;
-}
 /** Check if the 2 passwords are mach **/
 /*function check2Pass(val1, val2) {
     var err = false;

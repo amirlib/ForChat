@@ -1,72 +1,14 @@
 <%- contentFor('MAIN') %>
 
 <script src="/socket.io/socket.io.js"></script>
-<script>
-    var user = "", err = false, val = "";
-    var socket = io();
-    $(document).ready(function () {
-        $('#sendChat').attr('disabled', true);
-        $("#user").click(function() {
-		    $("#user").keyup(function() {
-			    val = this.value; //התווים עצמם
-			    if (val.length == 0) { //if the input is empty
-                    $('.hint').removeClass("error").text("שם המשתמש צריך להיות בין 4 ל-16 תווים מספריים ואותיות אנגליות בלבד");
-                    err = false;
-			    } else if (val.length > 16 || val.length < 4) { //אם האורך לא נכון
-                    $('.hint').addClass("error").text("שם משתמש לא באורך החוקי");
-                    err = false;
-			    } else {
-                    err = checkUserChars(val);
-                    if (err == false) {
-                        $('.hint').addClass("error").text("שם משתמש לא חוקי");
-                    } else {
-                        $('.hint').removeClass("error").text("");
-                    }
-                }
-            });
-        });
-    });
-    function checkButUser() {
-        if (err == false) {
-            $('.hint').addClass("error").text("לא הוזן שם משתמש חוקי");
-        } else {
-            user = val;
-            $('#sendChat').attr('disabled', false);
-        }
-    }
-    /** fuction for sending the text and user to the chat */
-    function sendChat(msg, userName) {
-        if (checkUserSend(userName) == true && checkEmpty(msg) == false) {
-            socket.emit('chat message', msg, userName);
-        }
-        $("#chat").val("");
-    }
-    $(function () {
-        $('#chat').keypress(function(e) {
-            if(e.which == 13) {
-                e.preventDefault(); /* prevent from '\n' appear */
-                sendChat(this.value, user);
-            }
-        });
-        $('#sendChat').click(function() {
-            sendChat($('#chat').val(), user);
-        });
-        socket.on('chat message', function(msg, userName) {
-            $('.messages').append($('<li>').addClass("liMsg").text(userName));
-            $('.messages').append($('<li>').addClass("liMsg").text(msg));
-            if($('#chatText')[0].scrollHeight - $('#chatText').innerHeight() <= $('#chatText').scrollTop() + 49) {
-                $('#chatText').scrollTop(5000);
-            }
-        });
-    });
-</script>
+<script src="app.js"></script>
 
 <main>
     <div class="userFrame">
         <div class="userTitle"> <span class="hint">שם המשתמש צריך להיות בין 4 ל-16 תווים מספריים ואותיות אנגליות בלבד</span> </div>
         <div class="userLine">
-            <div class="userCell"> <input type='text' id='user' name='user' maxlength='16' title="שם משתמש" placeholder='שם משתמש'> </div>
-            <div class="userCell"> <input type="button" id="saveUser" name="saveUser" value="שמור משתמש" onclick="checkButUser()"> </div>
+            <div class="userCell"> <input type='text' id='user' maxlength='16' title="שם משתמש" placeholder='שם משתמש'> </div>
+            <div class="userCell"> <input type="button" id="saveUser" value="שמור משתמש"> </div>
         </div>
     </div>
 
@@ -77,8 +19,8 @@
                 <ul class="messages"></ul>
             </div>
             <div class="chatLine">
-                <div class="chatCellText"> <textarea id="chat" name="chat" rows="4" cols="50"></textarea> </div>
-                <div class="chatCellBut"> <input type="button" id="sendChat" name="send" value="שלח"> </div>
+                <div class="chatCellText"> <textarea id="chat" rows="4" cols="50"></textarea> </div>
+                <div class="chatCellBut"> <input type="button" id="sendChat" value="שלח"> </div>
             </div>
         </div>
     </div>
