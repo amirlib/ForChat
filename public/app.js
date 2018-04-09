@@ -26,7 +26,7 @@ var controller = {
 
 var userVeiw = {
     init: function() {
-        var legalUser = false;
+        let legalUser = false;
         this.userInput = $("#user");
         this.userBut = $("#saveUser");
 
@@ -56,7 +56,7 @@ var userVeiw = {
             if (checkUserChars(val) == false) {
                 $('.hint').addClass("error").text("שם משתמש לא חוקי");
             } else {
-                $('.hint').removeClass("error").text("");
+                $('.hint').removeClass("error").text("על מנת לשמור את שם המשתמש, יש ללחוץ על הכפתור, שמור משתמש");
                 return true;
             }
         }
@@ -72,6 +72,13 @@ var chatVeiw = {
         this.chatInput = $("#chat");
         this.sendBut = $("#sendChat");
 
+        this.chatInput.click(function() {
+            if (controller.getUser() === null) {
+                $('.messages').append($('<li>').addClass("error").text("חובה להכניס שם משתמש למערכת"));
+                $('.messages').append($('<li>').text(''));
+            }
+        });
+
         this.sendBut.click(function() {
             chatVeiw.checkBeforeSendChat();
         });
@@ -86,6 +93,9 @@ var chatVeiw = {
     checkBeforeSendChat: function() {
         if (controller.getUser() === null) {
             $('.messages').append($('<li>').addClass("error").text("אין אפשרות להשתתף בצ'אט ללא שם מתשמש תיקני"));
+            $('.messages').append($('<li>').text(''));
+        } else if(checkEmpty(this.chatInput.val()) == true) {
+            $('.messages').append($('<li>').addClass("error").text("ההודעה ריקה"));
             $('.messages').append($('<li>').text(''));
         } else {
             controller.setMessage(this.chatInput.val());
