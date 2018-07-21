@@ -53,7 +53,7 @@ var userVeiw = {
         } else if (val.length > 16 || val.length < 4) { //אם האורך לא נכון
             $('.hint').addClass("error").text("שם משתמש לא באורך החוקי");
         } else {
-            if (checkUserChars(val) == false) {
+            if (userVeiw.checkUserChars(val) == false) {
                 $('.hint').addClass("error").text("שם משתמש לא חוקי");
             } else {
                 $('.hint').removeClass("error").text("על מנת לשמור את שם המשתמש, יש ללחוץ על הכפתור, שמור משתמש");
@@ -61,6 +61,15 @@ var userVeiw = {
             }
         }
         return false;
+    },
+    checkUserChars: function(val) {
+        for (let i = 0; i < val.length; i++) {
+            if (val.charCodeAt(i) <= 47 || (val.charCodeAt(i) >= 58 && val.charCodeAt(i) <= 64)
+                || (val.charCodeAt(i) >= 91 && val.charCodeAt(i) <= 96) || val.charCodeAt(i) >= 123) {
+                return false;
+            }
+        }
+        return true;
     },
     render: function() {
         $('#sendChat').attr('disabled', true);
@@ -94,13 +103,28 @@ var chatVeiw = {
         if (controller.getUser() === null) {
             $('.messages').append($('<li>').addClass("error").text("אין אפשרות להשתתף בצ'אט ללא שם מתשמש תיקני"));
             $('.messages').append($('<li>').text(''));
-        } else if(checkEmpty(this.chatInput.val()) == true) {
+        } else if(chatVeiw.checkEmpty(this.chatInput.val()) == true) {
             $('.messages').append($('<li>').addClass("error").text("ההודעה ריקה"));
             $('.messages').append($('<li>').text(''));
         } else {
             controller.setMessage(this.chatInput.val());
             chatVeiw.sendChat();
         }
+    },
+    checkEmpty: function(val) {
+        let i;
+        if (val.length == 0) {
+            return true;
+        }
+        for (i = 0; i < val.length; i++) {
+            if (val.charCodeAt(i) != 32 && val.charCodeAt(i) != 10) {
+                break;
+            }
+        }
+        if (i == val.length) {
+            return true;
+        }
+        return false;
     },
     sendChat: function() {
         socket.emit('chat message', controller.getMessage(), controller.getUser());
