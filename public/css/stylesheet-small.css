@@ -149,7 +149,7 @@ a:visited {
     height: 100%;
 }
 
-.credits {
+footer {
     text-align: center;
     width: 100%;
     height: 30px;
@@ -160,7 +160,7 @@ a:visited {
 }
 
 /* UP */
-.header-cont {
+header {
     box-sizing: border-box;
     width:100%;
     height: 50px;
@@ -170,9 +170,6 @@ a:visited {
     top: 0;
     left: 0;
     font-size: 20px;
-}
-
-.containerBut {
     text-align: center;
 }
 
