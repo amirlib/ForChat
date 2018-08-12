@@ -2,30 +2,22 @@ body {
     background-color: white;
 }
 
-.chatMain {
-    box-sizing: border-box;
+.chatFrame {
     width: 520px;
-    height: 630px;
     margin-left: auto;
     margin-right: auto;
 }
 
-.chatFrame {
+.chatMessagesFrame {
     height: 570px;
 }
 
-.chatText {
+.chatMessagesArea {
     height: 500px;
 }
 
 .userFrame {
-    box-sizing: border-box;
     width: 520px;
     margin-left: auto;
     margin-right: auto;
-}
-
-input[type="text"] {
-    width: 200px;
-    height: 30px;
 }

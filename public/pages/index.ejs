@@ -5,22 +5,21 @@
 
 <main>
     <div class="userFrame">
-        <div class="userTitle"> <span class="hint">שם המשתמש צריך להיות בין 4 ל-16 תווים מספריים ואותיות אנגליות בלבד</span> </div>
-        <div class="userLine">
+        <div class="userTitle"> <span id="hint">שם המשתמש צריך להיות בין 4 ל-16 תווים מספריים ואותיות אנגליות בלבד</span> </div>
+        <div class="userArea">
             <div class="userCell"> <input type='text' id='user' maxlength='16' title="שם משתמש" placeholder='שם משתמש'> </div>
             <div class="userCell"> <input type="button" id="saveUser" value="שמור משתמש"> </div>
         </div>
     </div>
-
-    <div class="chatMain">
+    <div class="chatFrame">
         <div class="chatTitle"> <h1>Welcome to Chat</h1> </div>
-        <div class="chatFrame">
-            <div class="chatText" id='chatText'>
+        <div class="chatMessagesFrame">
+            <div class="chatMessagesArea" id='chatMessagesArea'>
                 <ul class="messages"></ul>
             </div>
-            <div class="chatLine">
-                <div class="chatCellText"> <textarea id="chat" rows="4" cols="50"></textarea> </div>
-                <div class="chatCellBut"> <input type="button" id="sendChat" value="שלח"> </div>
+            <div class="chatTextArea">
+                <div class="chatTextAreaCell"> <textarea id="chat" rows="4" cols="50"></textarea> </div>
+                <div class="chatTextAreaBut"> <input type="button" id="sendChat" value="שלח"> </div>
             </div>
         </div>
     </div>

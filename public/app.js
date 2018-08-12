@@ -35,7 +35,7 @@ var userVeiw = {
                 controller.setUser($("#user").val());
                 $('#sendChat').attr('disabled', false);
             } else {
-                $('.hint').addClass("error").text("לא הוזן שם משתמש חוקי");
+                $('#hint').addClass("error").text("לא הוזן שם משתמש חוקי");
             }
         });
 
@@ -49,14 +49,14 @@ var userVeiw = {
     },
     checkUser: function(val) {
         if (val.length == 0) { //if the input is empty
-            $('.hint').removeClass("error").text("שם המשתמש צריך להיות בין 4 ל-16 תווים מספריים ואותיות אנגליות בלבד");
+            $('#hint').removeClass("error").text("שם המשתמש צריך להיות בין 4 ל-16 תווים מספריים ואותיות אנגליות בלבד");
         } else if (val.length > 16 || val.length < 4) { //אם האורך לא נכון
-            $('.hint').addClass("error").text("שם משתמש לא באורך החוקי");
+            $('#hint').addClass("error").text("שם משתמש לא באורך החוקי");
         } else {
             if (userVeiw.checkUserChars(val) == false) {
-                $('.hint').addClass("error").text("שם משתמש לא חוקי");
+                $('#hint').addClass("error").text("שם משתמש לא חוקי");
             } else {
-                $('.hint').removeClass("error").text("על מנת לשמור את שם המשתמש, יש ללחוץ על הכפתור, שמור משתמש");
+                $('#hint').removeClass("error").text("על מנת לשמור את שם המשתמש, יש ללחוץ על הכפתור, שמור משתמש");
                 return true;
             }
         }
@@ -138,8 +138,8 @@ $(document).ready(function() {
     socket.on('chat message', function(msg, userName) {
         $('.messages').append($('<li>').addClass("liMsg").text(userName));
         $('.messages').append($('<li>').addClass("liMsg").text(msg));
-        if($('#chatText')[0].scrollHeight - $('#chatText').innerHeight() <= $('#chatText').scrollTop() + 49) {
-            $('#chatText').scrollTop(5000);
+        if($('#chatMessagesArea')[0].scrollHeight - $('#chatMessagesArea').innerHeight() <= $('#chatMessagesArea').scrollTop() + 49) {
+            $('#chatMessagesArea').scrollTop(5000);
         }
     });
 });
