@@ -33,6 +33,6 @@ app.use(function (req, res) {
 });
 
 // start the server
-http.listen(port, function() {
+http.listen(process.env.PORT || port, function() {
     console.log('app started');
 });
