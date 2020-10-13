@@ -2,7 +2,7 @@
 	"name": "chat",
 	"version": "1.0.0",
 	"description": "",
-	"main": "server.js",
+	"main": "index.js",
 	"scripts": {
 		"start": "node src/index.js",
 		"dev": "env-cmd -f ./config/dev.env nodemon src/index.js -e js,hbs,html,css"
@@ -10,9 +10,7 @@
 	"author": "Amir Liberzon",
 	"license": "ISC",
 	"dependencies": {
-		"ejs": "^2.7.4",
 		"express": "^4.17.1",
-		"express-ejs-layouts": "^2.5.0",
 		"socket.io": "^2.3.0"
 	},
 	"devDependencies": {

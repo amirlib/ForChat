@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Chat</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="/css/stylesheet-small.css"
+		/>
+		<link
+			rel="stylesheet"
+			type="text/css"
+			media="screen and (min-width: 550px)"
+			href="/css/stylesheet-med.css"
+		/>
+		<script src="jquery.js"></script>
+	</head>
+	<body>
+		<header>
+			<nav>
+				<a href="/">Chat</a>
+			</nav>
+		</header>
+
+		<main>
+			<div class="userFrame">
+				<div class="userTitle">
+					<span id="hint"
+						>שם המשתמש צריך להיות בין 4 ל-16 תווים מספריים ואותיות
+						אנגליות בלבד</span
+					>
+				</div>
+				<div class="userArea">
+					<div class="userCell">
+						<input
+							type="text"
+							id="user"
+							maxlength="16"
+							title="שם משתמש"
+							placeholder="שם משתמש"
+						/>
+					</div>
+					<div class="userCell">
+						<input type="button" id="saveUser" value="שמור משתמש" />
+					</div>
+				</div>
+			</div>
+			<div class="chatFrame">
+				<div class="chatTitle"><h1>Welcome to Chat</h1></div>
+				<div class="chatMessagesFrame">
+					<div class="chatMessagesArea" id="chatMessagesArea">
+						<ul class="messages"></ul>
+					</div>
+					<div class="chatTextArea">
+						<div class="chatTextAreaCell">
+							<textarea id="chat" rows="4" cols="50"></textarea>
+						</div>
+						<div class="chatTextAreaBut">
+							<input type="button" id="sendChat" value="שלח" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+
+		<footer>Designed and program by Amir Liberzon</footer>
+
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="/app.js"></script>
+	</body>
+</html>
